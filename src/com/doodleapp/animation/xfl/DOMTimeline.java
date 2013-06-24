@@ -16,7 +16,7 @@ public class DOMTimeline {
 		}
 		
 		name = xml.getAttribute("name");
-		currentFrame = xml.getIntAttribute("currentFrame");
+		currentFrame = xml.getIntAttribute("currentFrame", 0);
 		
 		Element tmp = xml.getChildByName("layers");
 		if (tmp != null) {

@@ -13,10 +13,10 @@ import com.doodleapp.animation.xfl.Xfl;
 
 
 public class FAnimation {
-	private float X;
-	private float Y;
-	private float W;
-	private float H;
+	public float X;
+	public float Y;
+	public float W;
+	public float H;
 	public KFrame[] keyFrames;
 	
 
@@ -27,6 +27,9 @@ public class FAnimation {
 	public static final int LOOP_REVERSED = 3;
 	public static final int LOOP_PINGPONG = 4;
 	public static final int LOOP_RANDOM = 5;
+	
+	public static final int CENTER = 0;
+	public static final int LEFT_TOP = 1;
 
 	private float frameDuration;
 	private float animationDuration;
@@ -73,14 +76,14 @@ public class FAnimation {
 		animationDuration = keyFramesLength * frameDuration;
 		keyFrames = new KFrame[keyFramesLength];
 		for (int i=0; i< keyFramesLength; i++) {
-			KFrame tmp = new KFrame();
+			KFrame tmp = new KFrame(this);
 			tmp.setIndex(i);
 			keyFrames[i] = tmp;
 		}
 
 		for (DOMLayer layer : timeline.layers) {
 			for (DOMFrame domframe : layer.frames) {
-				Frame frame = new Frame(domframe, map);
+				Frame frame = new Frame(domframe, map, this);
 				for (int i = 0; i<domframe.duration; i++) {
 					keyFrames[domframe.index + i].addLayer(frame);
 				}

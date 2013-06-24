@@ -7,17 +7,14 @@ import com.badlogic.gdx.utils.Array;
 // The KFrame is constructed of server layer of Frame....
 // all layers of the this frame combined to be a KFrame
 public class KFrame implements Drawable {
-	float duration;
 	int index;
 	String keyMode;
 	Array<Frame> layers;
+	FAnimation animation;
 	
-	public KFrame() {
+	public KFrame(FAnimation animation) {
 		layers = new Array<Frame>();
-	}
-	
-	public void setDuration(float duration){
-		this.duration=duration;
+		this.animation = animation;
 	}
 	
 	public void setIndex(int index){
@@ -32,9 +29,7 @@ public class KFrame implements Drawable {
 	public int getIndex(){
 		return index;
 	}
-	public float getDuration(){
-		return duration;
-	}
+
 	public void addLayer(Frame frame) {
 		if (layers == null)
 			System.out.println("layers 怎么会为空呢？ 这不科学 呢");

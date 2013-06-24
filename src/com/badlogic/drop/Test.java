@@ -47,6 +47,8 @@ public class Test implements ApplicationListener, InputProcessor {
 	float time;
 	TextureAtlas boxAtlas;
 	FAnimation box;
+	FAnimation hong;
+	
 
 	@Override
 	public void create() {
@@ -82,7 +84,7 @@ public class Test implements ApplicationListener, InputProcessor {
 		map.put("tiekuai", tiekuai);
 		map.put("tielian", tielian);
 
-		animtaion = new FAnimation(xfl, map, 0, 0, FAnimation.LOOP);
+		animtaion = new FAnimation(xfl, map, 317.45f, 242.25f, FAnimation.LOOP);
 		// KFrame kframe = animtaion.getKeyFrame(Gdx.graphics.getDeltaTime());
 		KFrame kframe = animtaion.keyFrames[4];
 		//kframe.Debug();
@@ -93,6 +95,25 @@ public class Test implements ApplicationListener, InputProcessor {
 		color.a *= 1.0;
 		sprite.setColor(color);
 		spriteVertices = sprite.getVertices();
+		spriteVertices[0] = 0;
+		spriteVertices[1] = 0;
+		spriteVertices[3] = 0;
+		spriteVertices[4] = 0;
+		
+		spriteVertices[5] = 0;
+		spriteVertices[6] = actor.getHeight();
+		spriteVertices[8] = 0;;
+		spriteVertices[9] = 1.5f;
+		
+		spriteVertices[10] = actor.getWidth();
+		spriteVertices[11] = actor.getHeight();
+		spriteVertices[13] = 1.5f;
+		spriteVertices[14] = 1.5f;
+		
+		spriteVertices[15] = actor.getWidth();
+		spriteVertices[16] = 0;
+		spriteVertices[18] = 1.5f;
+		spriteVertices[19] = 0;
 
 		boxAtlas = new TextureAtlas(Gdx.files.internal("box.atlas"));
 
@@ -101,13 +122,13 @@ public class Test implements ApplicationListener, InputProcessor {
 		boxmap.put("baiyang", boxAtlas.findRegion("baiyang").getTexture());
 		boxmap.put("chunv", boxAtlas.findRegion("chunv").getTexture());
 		boxmap.put("juxie", boxAtlas.findRegion("juxie").getTexture());
-		boxmap.put("tianpin", boxAtlas.findRegion("tianpin").getTexture());
+		boxmap.put("tianping", boxAtlas.findRegion("tianping").getTexture());
 		boxmap.put("tianxie", boxAtlas.findRegion("tianxie").getTexture());
 		boxmap.put("jinniu", boxAtlas.findRegion("jinniu").getTexture());
 		boxmap.put("mojie", boxAtlas.findRegion("mojie").getTexture());
 		boxmap.put("shuangzi", boxAtlas.findRegion("shuangzi").getTexture());
 		boxmap.put("sheshou", boxAtlas.findRegion("sheshou").getTexture());
-		boxmap.put("shuangyu", boxAtlas.findRegion("shuangyu").getTexture());
+		boxmap.put("shuangnv", boxAtlas.findRegion("shuangnv").getTexture());
 		boxmap.put("shuipin", boxAtlas.findRegion("shuipin").getTexture());
 		boxmap.put("shizi", boxAtlas.findRegion("shizi").getTexture());
 		
@@ -118,9 +139,20 @@ public class Test implements ApplicationListener, InputProcessor {
 			e.printStackTrace();
 		}
 		box = new FAnimation(xfl, boxmap, 100, 100, FAnimation.LOOP);
-		box.keyFrames[11].Debug();
 		
-		
+		HashMap<String, Texture> hongmap = new HashMap<String, Texture>();
+		hongmap.put("guang", new Texture(Gdx.files.internal("guang.png")));
+		hongmap.put("guang2", new Texture(Gdx.files.internal("guang2.png")));
+		hongmap.put("hong", new Texture(Gdx.files.internal("hong.png")));
+		hongmap.put("xing", new Texture(Gdx.files.internal("xing.png")));
+		try {
+			xfl = xflparser.parse(Gdx.files.internal("hong.xml"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		hong = new FAnimation(xfl, hongmap, 319.15f, 241.20f, FAnimation.LOOP);
+	//	hong.keyFrames[3].Debug();
 	}
 
 	@Override
@@ -134,17 +166,19 @@ public class Test implements ApplicationListener, InputProcessor {
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		time += Gdx.graphics.getDeltaTime();
 		KFrame kframe1 = animtaion.getKeyFrame(time);
 		KFrame kframe2 = box.getKeyFrame(time);
+		KFrame kframe3 = hong.getKeyFrame(time);
 		batch.begin();
-		kframe1.draw(batch, 50, 50, 200, 200);
+		kframe1.draw(batch, 100, 100, 85, 85);
 //		batch.draw(actor, spriteVertices, 0, 20);
 		// batch.draw(actor, 0, 0, 100, 100);
-		kframe2.draw(batch, 200, 200, 200, 200);
+	//	kframe2.draw(batch, 0, 0, 85, 85);
+	//	kframe3.draw(batch, 0, 0, 85, 85);
 		batch.end();
 	}
 
