@@ -9,7 +9,7 @@ public class Color {
 					+ xml.getName());
 		}
 		alphaMultiplier = 1d;
-		String str = xml.getAttribute("alphaMultiplier");
+		String str = xml.getAttribute("alphaMultiplier", null);
 		if (str != null)
 			alphaMultiplier = Double.parseDouble(str);
 	}

@@ -48,6 +48,8 @@ public class Test implements ApplicationListener, InputProcessor {
 	TextureAtlas boxAtlas;
 	FAnimation box;
 	FAnimation hong;
+	FAnimation ice;
+	FAnimation cross;
 	
 
 	@Override
@@ -84,9 +86,9 @@ public class Test implements ApplicationListener, InputProcessor {
 		map.put("tiekuai", tiekuai);
 		map.put("tielian", tielian);
 
-		animtaion = new FAnimation(xfl, map, 317.45f, 242.25f, FAnimation.LOOP);
+		animtaion = new FAnimation(xfl, map, 317.45f, 242.25f, 85.05f, 84.5f, FAnimation.LOOP);
 		// KFrame kframe = animtaion.getKeyFrame(Gdx.graphics.getDeltaTime());
-		KFrame kframe = animtaion.keyFrames[4];
+		//KFrame kframe = animtaion.keyFrames[4];
 		//kframe.Debug();
 
 		actor = new Texture(Gdx.files.internal("actor1.gif"));
@@ -94,7 +96,7 @@ public class Test implements ApplicationListener, InputProcessor {
 		Color color = sprite.getColor();
 		color.a *= 1.0;
 		sprite.setColor(color);
-		spriteVertices = sprite.getVertices();
+/*		spriteVertices = sprite.getVertices();
 		spriteVertices[0] = 0;
 		spriteVertices[1] = 0;
 		spriteVertices[3] = 0;
@@ -114,7 +116,7 @@ public class Test implements ApplicationListener, InputProcessor {
 		spriteVertices[16] = 0;
 		spriteVertices[18] = 1.5f;
 		spriteVertices[19] = 0;
-
+*/
 		boxAtlas = new TextureAtlas(Gdx.files.internal("box.atlas"));
 
 		HashMap<String, Texture> boxmap = new HashMap<String, Texture>();
@@ -151,8 +153,45 @@ public class Test implements ApplicationListener, InputProcessor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		hong = new FAnimation(xfl, hongmap, 319.15f, 241.20f, FAnimation.LOOP);
+		hong = new FAnimation(xfl, hongmap, 319.15f, 241.20f, 112f, 107f, FAnimation.LOOP);
 	//	hong.keyFrames[3].Debug();
+		
+		HashMap<String, Texture> icemap = new HashMap<String, Texture>();
+		icemap.put("bingkuai", new Texture(Gdx.files.internal("bingkuai.png")));
+		icemap.put("lie", new Texture(Gdx.files.internal("lie.png")));
+		icemap.put("lie2", new Texture(Gdx.files.internal("lie2.png")));
+		icemap.put("lie3", new Texture(Gdx.files.internal("lie3.png")));
+		try {
+			xfl = xflparser.parse(Gdx.files.internal("ice.xml"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ice = new FAnimation(xfl, icemap, 100f, 100f, FAnimation.LOOP);
+		
+		HashMap<String, Texture> crossmap = new HashMap<String, Texture>();
+		crossmap.put("guangmang", new Texture(Gdx.files.internal("guangmang.png")));
+		crossmap.put("bangzi", new Texture(Gdx.files.internal("bangzi.png")));
+		crossmap.put("yellowstar3", new Texture(Gdx.files.internal("yellowstar3.png")));
+		crossmap.put("yuanxing", new Texture(Gdx.files.internal("yuanxing.png")));
+		crossmap.put("yellowstar", new Texture(Gdx.files.internal("yellowstar.png")));
+		crossmap.put("yellowstar4", new Texture(Gdx.files.internal("yellowstar4.png")));
+		crossmap.put("zhuti", new Texture(Gdx.files.internal("zhuti.png")));
+		crossmap.put("zhuti2", new Texture(Gdx.files.internal("zhuti2.png")));
+		crossmap.put("zhutiguang", new Texture(Gdx.files.internal("zhutiguang.png")));
+		crossmap.put("zhutihuang2", new Texture(Gdx.files.internal("zhutihuang2.png")));
+		crossmap.put("zhutiguang3", new Texture(Gdx.files.internal("zhutiguang3.png")));
+		crossmap.put("zhuti2guang", new Texture(Gdx.files.internal("zhuti2guang.png")));
+		crossmap.put("zhuti2guang2", new Texture(Gdx.files.internal("zhuti2guang2.png")));
+		crossmap.put("zhuti3guang3", new Texture(Gdx.files.internal("zhuti3guang3.png")));
+		
+		try {
+			xfl = xflparser.parse(Gdx.files.internal("cross.xml"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cross = new FAnimation(xfl, crossmap, 100f, 100f, FAnimation.LOOP);
 	}
 
 	@Override
@@ -173,12 +212,17 @@ public class Test implements ApplicationListener, InputProcessor {
 		KFrame kframe1 = animtaion.getKeyFrame(time);
 		KFrame kframe2 = box.getKeyFrame(time);
 		KFrame kframe3 = hong.getKeyFrame(time);
+		KFrame kframe4 = ice.getKeyFrame(time);
+		KFrame kframe5 = cross.getKeyFrame(time);
 		batch.begin();
+		batch.draw(actor, 100, 100, 100, 100);
 		kframe1.draw(batch, 100, 100, 85, 85);
 //		batch.draw(actor, spriteVertices, 0, 20);
-		// batch.draw(actor, 0, 0, 100, 100);
-	//	kframe2.draw(batch, 0, 0, 85, 85);
-	//	kframe3.draw(batch, 0, 0, 85, 85);
+
+	//	kframe2.draw(batch, 200, 200, 85, 85);
+		kframe3.draw(batch, 0, 0, 85, 85);
+	//	kframe4.draw(batch, 300, 300, 100, 100);
+		kframe5.draw(batch, 200, 200, 110, 110);
 		batch.end();
 	}
 

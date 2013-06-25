@@ -58,10 +58,10 @@ public class FrameElement {
 		this.animation = animation;
 		this.name = inst.libraryItemName;
 		this.texture = map.get(inst.libraryItemName);
-		this.sprite = new Sprite(texture);
 		if (this.texture == null) {
 			System.out.println("没有找到对应的texture"+inst.libraryItemName);
 		}
+		this.sprite = new Sprite(texture);
 		this.matrix = inst.matrix;
 		this.transformationPoint = inst.transformationPoint;
 		this.color = inst.color;
@@ -87,30 +87,30 @@ public class FrameElement {
 			yScale = height / animation.H;
 		}
 		
-		//move to origin based on transformationPoint
-		float x1 = 0; //vertices[X1];
+
+/*		float x1 = 0; //vertices[X1];
 		float y1 = 0;//vertices[Y1];		
-		float x2 = texture.getWidth();//vertices[X2];
-		float y2 = 0;//vertices[Y2];
+		float x2 = 0;//vertices[X2];
+		float y2 = texture.getHeight();//vertices[Y2];
 		float x3 = texture.getWidth() ;//vertices[X3];
 		float y3 = texture.getHeight();//vertices[Y3];
-		float x4 = 0;//vertices[X4];
-		float y4 = texture.getHeight();//vertices[Y4];
+		float x4 = texture.getWidth();//vertices[X4];
+		float y4 = 0;//vertices[Y4];
+*/		
 		
-//		float x1 = - transformationPoint.x * xScale; //vertices[X1];
-//		float y1 = - transformationPoint.y * yScale;//vertices[Y1];		
-//		float x2 = - transformationPoint.x * xScale;//vertices[X2];
-//		float y2 = (texture.getWidth() - transformationPoint.y) * yScale;//vertices[Y2];
-//		float x3 = (texture.getWidth() - transformationPoint.x) * xScale;//vertices[X3];
-//		float y3 = (texture.getHeight() - transformationPoint.y) * yScale;//vertices[Y3];
-//		float x4 = (texture.getWidth() - transformationPoint.x) * xScale;//vertices[X4];
-//		float y4 = - transformationPoint.y * yScale;//vertices[Y4];
-/*		
-		float ox = animation.X + animation.W / 2;
-		float oy = animation.Y + animation.H / 2;
-		matrix.tx -= ox;
-		matrix.ty -= oy;
-	*/	
+		// transformation is based on transformationPoint, do this sequence:
+		// use transformationPoint as the origin, move the object
+		// do matrix transform
+		// move back the object
+		float x1 = - transformationPoint.x * xScale; //vertices[X1];
+		float y1 = - transformationPoint.y * yScale;//vertices[Y1];		
+		float x2 = - transformationPoint.x * xScale;//vertices[X2];
+		float y2 = (texture.getHeight() - transformationPoint.y) * yScale;//vertices[Y2];
+		float x3 = (texture.getWidth() - transformationPoint.x) * xScale;//vertices[X3];
+		float y3 = (texture.getHeight() - transformationPoint.y) * yScale;//vertices[Y3];
+		float x4 = (texture.getWidth() - transformationPoint.x) * xScale;//vertices[X4];
+		float y4 = - transformationPoint.y * yScale;//vertices[Y4];
+
 //		float x1 = 0;
 //		float y1 = 0;
 //		float x2 = 0;
@@ -124,55 +124,79 @@ public class FrameElement {
 //		float a = (float) (matrix.a * xScale);
 //		float b = (float) (matrix.b * yScale);
 
-//		float a = -(float) matrix.a;
+		float a = (float) matrix.a;
+		float b = (float) matrix.b;
+		float c = (float) matrix.c;
+		float d = (float) matrix.d;
+		float tx =  (matrix.tx - animation.X );
+		float ty =  (matrix.ty - animation.Y );
+		
+		// x' = a*x + c*y + tx
+		// y' = b*x + d*y + ty
+/*		float fx1 = (float) (x1 * matrix.a + y1 * matrix.c) + matrix.tx + x;
+		float fy1 = (float) (x1 * matrix.b + y1 * matrix.d) + matrix.ty + y;
+		float fx2 = (float) (x2 * matrix.a + y2 * matrix.c) + matrix.tx + x;
+		float fy2 = (float) (x2 * matrix.b + y2 * matrix.d) + matrix.ty + y;
+		float fx3 = (float) (x3 * matrix.a + y3 * matrix.c) + matrix.tx + x;
+		float fy3 = (float) (x3 * matrix.b + y3 * matrix.d) + matrix.ty + y;//		float a = -(float) matrix.a;
 //		float b = -(float) matrix.b;
 //		float c = -(float) matrix.c;
 //		float d = -(float) matrix.d;
 //		float tx = -matrix.tx;
 //		float ty = -matrix.ty;
-		
-		// x' = a*x + c*y + tx
-		// y' = b*x + d*y + ty
-		float fx1 = (float) (x1 * matrix.a + y1 * matrix.c) + matrix.tx + x;
-		float fy1 = (float) (x1 * matrix.b + y1 * matrix.d) + matrix.ty + y;
-		float fx2 = (float) (x2 * matrix.a + y2 * matrix.c) + matrix.tx + x;
-		float fy2 = (float) (x2 * matrix.b + y2 * matrix.d) + matrix.ty + y;
-		float fx3 = (float) (x3 * matrix.a + y3 * matrix.c) + matrix.tx + x;
-		float fy3 = (float) (x3 * matrix.b + y3 * matrix.d) + matrix.ty + y;
 		float fx4 = (float) (x4 * matrix.a + y4 * matrix.c) + matrix.tx + x;
-		float fy4 = (float) (x4 * matrix.b + y4 * matrix.d) + matrix.ty + y;
+		float fy4 = (float) (x4 * matrix.b + y4 * matrix.d) + matrix.ty + y;*/
 		
-//		x1 = (float) (x1 *  matrix.a  + y1 * matrix.c) + matrix.tx + transformationPoint.x;
-//		y1 = (float) (x1 *  matrix.b  + y1 * matrix.d) + matrix.ty + transformationPoint.y;
-//		x2 = (float) (x2 *  matrix.a  + y2 * matrix.c) + matrix.tx + transformationPoint.x;
-//		y2 = (float) (x2 *  matrix.b  + y2 * matrix.d) + matrix.ty + transformationPoint.y;
-//		x3 = (float) (x3 *  matrix.a  + y3 * matrix.c) + matrix.tx + transformationPoint.x;
-//		y3 = (float) (x3 *  matrix.b  + y3 * matrix.d) + matrix.ty + transformationPoint.y;
-//		x4 = (float) (x4 *  matrix.a  + y4 * matrix.c) + matrix.tx + transformationPoint.x;
-//		y4 = (float) (x4 *  matrix.b  + y4 * matrix.d) + matrix.ty + transformationPoint.y;
+/*		float fx1 = (float) (x1 *  a  + y1 * c) + tx;
+		float fy1 = (float) (x1 *  b  + y1 * d) + ty;
+		float fx2 = (float) (x2 *  a  + y2 * c) + tx;
+		float fy2 = (float) (x2 *  b  + y2 * d) + ty;
+		float fx3 = (float) (x3 *  a  + y3 * c) + tx;
+		float fy3 = (float) (x3 *  b  + y3 * d) + ty;
+		float fx4 = (float) (x4 *  a  + y4 * c) + tx;
+		float fy4 = (float) (x4 *  b  + y4 * d) + ty;*/
+		
+		float fx1 = (float) (x1 *  a  + y1 * c) + tx + transformationPoint.x;
+		float fy1 = (float) (x1 *  b  + y1 * d) + ty + transformationPoint.y;
+		float fx2 = (float) (x2 *  a  + y2 * c) + tx + transformationPoint.x;
+		float fy2 = (float) (x2 *  b  + y2 * d) + ty + transformationPoint.y;
+		float fx3 = (float) (x3 *  a  + y3 * c) + tx + transformationPoint.x;
+		float fy3 = (float) (x3 *  b  + y3 * d) + ty + transformationPoint.y;
+		float fx4 = (float) (x4 *  a  + y4 * c) + tx + transformationPoint.x;
+		float fy4 = (float) (x4 *  b  + y4 * d) + ty + transformationPoint.y;
+		
+/*		float fx1 = (float) (x1 *  matrix.a  + y1 * matrix.c) + matrix.tx + transformationPoint.x;
+		float fy1 = (float) (x1 *  matrix.b  + y1 * matrix.d) + matrix.ty + transformationPoint.y;
+		float fx2 = (float) (x2 *  matrix.a  + y2 * matrix.c) + matrix.tx + transformationPoint.x;
+		float fy2 = (float) (x2 *  matrix.b  + y2 * matrix.d) + matrix.ty + transformationPoint.y;
+		float fx3 = (float) (x3 *  matrix.a  + y3 * matrix.c) + matrix.tx + transformationPoint.x;
+		float fy3 = (float) (x3 *  matrix.b  + y3 * matrix.d) + matrix.ty + transformationPoint.y;
+		float fx4 = (float) (x4 *  matrix.a  + y4 * matrix.c) + matrix.tx + transformationPoint.x;
+		float fy4 = (float) (x4 *  matrix.b  + y4 * matrix.d) + matrix.ty + transformationPoint.y;*/
 
-		vertices[X1] = fx1 - animation.X + x;
-		vertices[Y1] = (fy1 - animation.Y) + y;
+		// inverse the y-coordinate
+		vertices[X1] = fx1 + x + animation.W/2;
+		vertices[Y1] = -fy1 + y + animation.H/2;
 		vertices[U1] = 0;
 		vertices[V1] = 0;
 		
-		vertices[X2] = fx2 - animation.X + x;
-		vertices[Y2] = (fy2 - animation.Y) + y;
-		vertices[U2] = 1;
-		vertices[V2] = 0;
+		vertices[X2] = fx2 + x + animation.W/2;
+		vertices[Y2] = -fy2 + y + animation.H/2;
+		vertices[U2] = 0;
+		vertices[V2] = 1;
 		
-		vertices[X3] = fx3 - animation.X + x;
-		vertices[Y3] = (fy3 - animation.Y) + y;
+		vertices[X3] = fx3 + x + animation.W/2;
+		vertices[Y3] = -fy3 + y + animation.H/2;
 		vertices[U3] = 1;
 		vertices[V3] = 1;
 		
-		vertices[X4] = fx4 - animation.X + x;
-		vertices[Y4] = (fy4 - animation.Y) + y;
-		vertices[U4] = 0;
-		vertices[V4] = 1;
+		vertices[X4] = fx4 + x + animation.W/2;
+		vertices[Y4] = -fy4 + y + animation.H/2;
+		vertices[U4] = 1;
+		vertices[V4] = 0;
 		
 		batch.draw(texture, vertices, 0, 20);
-	//	System.out.println("x1:"+vertices[X1]+"y1:"+vertices[Y1]+"x3:"+vertices[X3]+"y3:"+vertices[Y3]);
+//		System.out.println("x1:"+vertices[X1]+"y1:"+vertices[Y1]+"x3:"+vertices[X3]+"y3:"+vertices[Y3]);
 
 		if (color != null) {
 			com.badlogic.gdx.graphics.Color tmp = sprite.getColor();
