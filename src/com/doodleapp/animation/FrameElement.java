@@ -102,23 +102,23 @@ public class FrameElement {
 		// use transformationPoint as the origin, move the object
 		// do matrix transform
 		// move back the object
-		float x1 = - transformationPoint.x * xScale; //vertices[X1];
-		float y1 = - transformationPoint.y * yScale;//vertices[Y1];		
-		float x2 = - transformationPoint.x * xScale;//vertices[X2];
-		float y2 = (texture.getHeight() - transformationPoint.y) * yScale;//vertices[Y2];
-		float x3 = (texture.getWidth() - transformationPoint.x) * xScale;//vertices[X3];
-		float y3 = (texture.getHeight() - transformationPoint.y) * yScale;//vertices[Y3];
-		float x4 = (texture.getWidth() - transformationPoint.x) * xScale;//vertices[X4];
+		float x1 = - transformationPoint.x * xScale;
+		float y1 = - transformationPoint.y * yScale;
+		float x2 = - transformationPoint.x * xScale;
+		float y2 = (texture.getHeight() - transformationPoint.y) * yScale;
+		float x3 = (texture.getWidth() - transformationPoint.x) * xScale;
+		float y3 = (texture.getHeight() - transformationPoint.y) * yScale;
+		float x4 = (texture.getWidth() - transformationPoint.x) * xScale;
 		float y4 = - transformationPoint.y * yScale;//vertices[Y4];
 
-//		float x1 = 0;
-//		float y1 = 0;
-//		float x2 = 0;
-//		float y2 = texture.getHeight();
-//		float x3 = texture.getWidth();
-//		float y3 = texture.getHeight();
-//		float x4 = texture.getWidth();
-//		float y4 = 0;
+/*		float x1 = 0;
+		float y1 = 0;
+		float x2 = 0;
+		float y2 = texture.getHeight();
+		float x3 = texture.getWidth();
+		float y3 = texture.getHeight();
+		float x4 = texture.getWidth();
+		float y4 = 0;*/
 //		float xScale = 4f;
 //		float yScale = 4f;
 //		float a = (float) (matrix.a * xScale);
@@ -129,7 +129,9 @@ public class FrameElement {
 		float c = (float) matrix.c;
 		float d = (float) matrix.d;
 		float tx =  (matrix.tx - animation.X );
-		float ty =  (matrix.ty - animation.Y );
+		float ty =  (matrix.ty - animation.Y );	
+/*		float tx =  (matrix.tx - animation.X  + animation.W/2);
+		float ty =  (matrix.ty - animation.Y + animation.H/2);*/
 		
 		// x' = a*x + c*y + tx
 		// y' = b*x + d*y + ty
@@ -194,6 +196,26 @@ public class FrameElement {
 		vertices[Y4] = -fy4 + y + animation.H/2;
 		vertices[U4] = 1;
 		vertices[V4] = 0;
+		
+/*		vertices[X1] = fx1 + x;
+		vertices[Y1] = -fy1 + y;
+		vertices[U1] = 0;
+		vertices[V1] = 0;
+		
+		vertices[X2] = fx2 + x;
+		vertices[Y2] = -fy2 + y;
+		vertices[U2] = 0;
+		vertices[V2] = 1;
+		
+		vertices[X3] = fx3 + x;
+		vertices[Y3] = -fy3 + y;
+		vertices[U3] = 1;
+		vertices[V3] = 1;
+		
+		vertices[X4] = fx4 + x;
+		vertices[Y4] = -fy4 + y;
+		vertices[U4] = 1;
+		vertices[V4] = 0;*/
 		
 		batch.draw(texture, vertices, 0, 20);
 //		System.out.println("x1:"+vertices[X1]+"y1:"+vertices[Y1]+"x3:"+vertices[X3]+"y3:"+vertices[Y3]);

@@ -220,7 +220,7 @@ public class Test implements ApplicationListener, InputProcessor {
 //		batch.draw(actor, spriteVertices, 0, 20);
 
 	//	kframe2.draw(batch, 200, 200, 85, 85);
-		kframe3.draw(batch, 0, 0, 85, 85);
+		kframe3.draw(batch, 350, 150, 85, 85);
 	//	kframe4.draw(batch, 300, 300, 100, 100);
 		kframe5.draw(batch, 200, 200, 110, 110);
 		batch.end();
