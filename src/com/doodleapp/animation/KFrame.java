@@ -3,10 +3,11 @@ package com.doodleapp.animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
+import com.doodleapp.animation.xfl.Matrix;
 
 // The KFrame is constructed of server layer of Frame....
 // all layers of the this frame combined to be a KFrame
-public class KFrame implements Drawable {
+public class KFrame implements Drawable,DrawableRecurse  {
 	int index;
 	String keyMode;
 	Array<Frame> layers;
@@ -51,8 +52,9 @@ public class KFrame implements Drawable {
 	@Override
 	public void draw(SpriteBatch batch, float x, float y, float width,
 			float height) {
+		Matrix matrix = new Matrix();
 		for (Frame frame:layers) {
-			frame.draw(batch, x, y, width, height);
+			frame.drawRecurse(batch, index, x, y, width, height, matrix);
 		}	
 	}
 
@@ -126,6 +128,14 @@ public class KFrame implements Drawable {
 	public void setMinHeight(float minHeight) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void drawRecurse(SpriteBatch batch, int index, float x, float y,
+			float width, float height, Matrix matrix) {
+		for (Frame frame:layers) {
+			frame.drawRecurse(batch, index, x, y, width, height, matrix);
+		}	
 	}
 
 }

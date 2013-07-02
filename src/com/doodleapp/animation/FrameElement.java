@@ -110,14 +110,14 @@ public class FrameElement {
 		float x4 = (texture.getRegionWidth() - transformationPoint.x) * xScale;//vertices[X4];
 		float y4 = - transformationPoint.y * yScale;//vertices[Y4];
 
-//		float x1 = 0;
-//		float y1 = 0;
-//		float x2 = 0;
-//		float y2 = texture.getHeight();
-//		float x3 = texture.getWidth();
-//		float y3 = texture.getHeight();
-//		float x4 = texture.getWidth();
-//		float y4 = 0;
+/*		float x1 = 0;
+		float y1 = 0;
+		float x2 = 0;
+		float y2 = texture.getHeight();
+		float x3 = texture.getWidth();
+		float y3 = texture.getHeight();
+		float x4 = texture.getWidth();
+		float y4 = 0;*/
 //		float xScale = 4f;
 //		float yScale = 4f;
 //		float a = (float) (matrix.a * xScale);
@@ -194,7 +194,6 @@ public class FrameElement {
 		vertices[Y4] = -fy4 + y + height/2;;
 		vertices[U4] = texture.getU2();
 		vertices[V4] = texture.getV();
-		
 
 		batch.draw(texture.getTexture(), vertices, 0, 20);
 
