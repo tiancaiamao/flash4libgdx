@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class DOMSymbolInstance {
 	public String libraryItemName;
-//	public String symbolType;
+	public String symbolType;
 //	public int firstFrame;
 //	public String loop;
 
@@ -12,8 +12,8 @@ public class DOMSymbolInstance {
 	public Point transformationPoint;
 	public AdjustColorFilter filters;
 	public Color color;
-	public float centerPoint3DX;
-	public float centerPoint3DY;
+//	public float centerPoint3DX;
+//	public float centerPoint3DY;
 
 	public DOMSymbolInstance(Element xml) {
 		if (!xml.getName().equals("DOMSymbolInstance")) {
@@ -22,11 +22,14 @@ public class DOMSymbolInstance {
 		}
 
 		libraryItemName = xml.getAttribute("libraryItemName");
-	//	symbolType = xml.getAttribute("symbolType");
+//		symbolType = xml.getAttribute("symbolType", null);
+//		if (symbolType == null || !symbolType.equals("graphic")) {
+//			System.out.println("only graphic SymbolInstance supported! in " + libraryItemName);
+//		}
 	//	firstFrame = xml.getIntAttribute("firstFrame");
 	//	loop = xml.getAttribute("loop");
-		centerPoint3DX = xml.getFloatAttribute("centerPoint3DX", 0);
-		centerPoint3DY = xml.getFloatAttribute("centerPoint3DY", 0);
+	//	centerPoint3DX = xml.getFloatAttribute("centerPoint3DX", 0);
+	//	centerPoint3DY = xml.getFloatAttribute("centerPoint3DY", 0);
 
 		Element tmp = xml.getChildByName("matrix");
 		if (tmp != null) {

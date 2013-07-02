@@ -17,7 +17,7 @@ public class FAnimation {
 	public float Y;
 	public float W;
 	public float H;
-	private KFrame[] keyFrames;
+	public KFrame[] keyFrames;
 	
 
 	
@@ -36,24 +36,24 @@ public class FAnimation {
 
 	private int playMode = NORMAL;
 	
-	public FAnimation(Xfl xfl, Map<String, Texture> map) {
+	public FAnimation(Xfl xfl, Map<String, TextureRegion> map) {
 		init(xfl, map, 0f, 0f, 0.0f, 0.0f, 1f/24f, NORMAL);
 	}
-	public FAnimation(Xfl xfl, Map<String, Texture> map, int playMode) {
+	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, int playMode) {
 		init(xfl, map, 0f, 0f, 0.0f, 0.0f, 1f/24f,  playMode);
 	}
-	public FAnimation(Xfl xfl, Map<String, Texture> map, float x, float y) {
+	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, float x, float y) {
 		init(xfl, map, x, y, 0.0f, 0.0f, 1f/24f, NORMAL);
 	}
-	public FAnimation(Xfl xfl, Map<String, Texture> map, float x, float y, int playMode) {
+	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, float x, float y, int playMode) {
 		init(xfl, map, x, y, 0.0f, 0.0f, 1f/24f, playMode);
 	}
-	public FAnimation(Xfl xfl, Map<String, Texture> map, float x, float y, float w, float h, int playMode) {
+	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, float x, float y, float w, float h, int playMode) {
 		init(xfl, map, x, y, w, h, 1f/24f, playMode);
 	}
 	
 	// the constructor
-	private void init(Xfl xfl, Map<String, Texture> map, float x,
+	private void init(Xfl xfl, Map<String, TextureRegion> map, float x,
 			float y, float w, float h, float frameDuration, int playMode) {
 		X = x;
 		Y = y;

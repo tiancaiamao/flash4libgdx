@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.doodleapp.animation.xfl.DOMFrame;
 
 // It's a Frame in one layer
@@ -11,7 +12,7 @@ public class Frame {
 	FrameElement[] elements;
 	FAnimation animation;
 
-	public Frame(DOMFrame domframe, Map<String, Texture> map, FAnimation animation) {
+	public Frame(DOMFrame domframe, Map<String, TextureRegion> map, FAnimation animation) {
 		int length = domframe.elements.length;
 		if (length > 0) {
 			elements = new FrameElement[length];

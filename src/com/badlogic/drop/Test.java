@@ -71,14 +71,13 @@ public class Test implements ApplicationListener, InputProcessor {
 		}
 
 		time = 0;
-		Texture suo = new Texture(Gdx.files.internal("suo.png"));
-		Texture liantiao = new Texture(Gdx.files.internal("liantiao.png"));
-		Texture suokou = new Texture(Gdx.files.internal("suokou.png"));
-		Texture suokou2 = new Texture(Gdx.files.internal("suokou2.png"));
-		Texture tiekuai = new Texture(Gdx.files.internal("tiekuai.png"));
-
-		Texture tielian = new Texture(Gdx.files.internal("tielian.png"));
-		HashMap<String, Texture> map = new HashMap<String, Texture>();
+		TextureRegion suo = new TextureRegion(new Texture(Gdx.files.internal("suo.png")));
+		TextureRegion liantiao = new TextureRegion( new Texture(Gdx.files.internal("liantiao.png")));
+		TextureRegion suokou = new TextureRegion( new Texture(Gdx.files.internal("suokou.png")));
+		TextureRegion suokou2 =new TextureRegion( new Texture(Gdx.files.internal("suokou2.png")));
+		TextureRegion tiekuai = new TextureRegion( new Texture(Gdx.files.internal("tiekuai.png")));
+		TextureRegion tielian = new TextureRegion(new Texture(Gdx.files.internal("tielian.png")));
+		HashMap<String, TextureRegion> map = new HashMap<String, TextureRegion>();
 		map.put("suo", suo);
 		map.put("liantiao", liantiao);
 		map.put("suokou", suokou);
@@ -119,20 +118,20 @@ public class Test implements ApplicationListener, InputProcessor {
 */
 		boxAtlas = new TextureAtlas(Gdx.files.internal("box.atlas"));
 
-		HashMap<String, Texture> boxmap = new HashMap<String, Texture>();
-		boxmap.put("box", boxAtlas.findRegion("box").getTexture());
-		boxmap.put("baiyang", boxAtlas.findRegion("baiyang").getTexture());
-		boxmap.put("chunv", boxAtlas.findRegion("chunv").getTexture());
-		boxmap.put("juxie", boxAtlas.findRegion("juxie").getTexture());
-		boxmap.put("tianping", boxAtlas.findRegion("tianping").getTexture());
-		boxmap.put("tianxie", boxAtlas.findRegion("tianxie").getTexture());
-		boxmap.put("jinniu", boxAtlas.findRegion("jinniu").getTexture());
-		boxmap.put("mojie", boxAtlas.findRegion("mojie").getTexture());
-		boxmap.put("shuangzi", boxAtlas.findRegion("shuangzi").getTexture());
-		boxmap.put("sheshou", boxAtlas.findRegion("sheshou").getTexture());
-		boxmap.put("shuangnv", boxAtlas.findRegion("shuangnv").getTexture());
-		boxmap.put("shuipin", boxAtlas.findRegion("shuipin").getTexture());
-		boxmap.put("shizi", boxAtlas.findRegion("shizi").getTexture());
+		HashMap<String, TextureRegion> boxmap = new HashMap<String, TextureRegion>();	
+		boxmap.put("baiyang", boxAtlas.findRegion("baiyang"));
+		boxmap.put("chunv", boxAtlas.findRegion("chunv"));
+		boxmap.put("juxie", boxAtlas.findRegion("juxie"));
+		boxmap.put("tianping", boxAtlas.findRegion("tianping"));
+		boxmap.put("tianxie", boxAtlas.findRegion("tianxie"));
+		boxmap.put("jinniu", boxAtlas.findRegion("jinniu"));
+		boxmap.put("mojie", boxAtlas.findRegion("mojie"));
+		boxmap.put("shuangzi", boxAtlas.findRegion("shuangzi"));
+		boxmap.put("sheshou", boxAtlas.findRegion("sheshou"));
+		boxmap.put("shuangnv", boxAtlas.findRegion("shuangnv"));
+		boxmap.put("shuipin", boxAtlas.findRegion("shuipin"));
+		boxmap.put("shizi", boxAtlas.findRegion("shizi"));
+		boxmap.put("box", boxAtlas.findRegion("box"));
 		
 		try {
 			xfl = xflparser.parse(Gdx.files.internal("box.xml"));
@@ -140,9 +139,10 @@ public class Test implements ApplicationListener, InputProcessor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		box = new FAnimation(xfl, boxmap, 100, 100, FAnimation.LOOP);
+		box = new FAnimation(xfl, boxmap, 100, 100, 85, 85,  FAnimation.LOOP);
+//		box.keyFrames[15].Debug();
 		
-		HashMap<String, Texture> hongmap = new HashMap<String, Texture>();
+/*		HashMap<String, Texture> hongmap = new HashMap<String, Texture>();
 		hongmap.put("guang", new Texture(Gdx.files.internal("guang.png")));
 		hongmap.put("guang2", new Texture(Gdx.files.internal("guang2.png")));
 		hongmap.put("hong", new Texture(Gdx.files.internal("hong.png")));
@@ -152,11 +152,11 @@ public class Test implements ApplicationListener, InputProcessor {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		hong = new FAnimation(xfl, hongmap, 319.15f, 241.20f, 112f, 107f, FAnimation.LOOP);
+		}*/
+	//	hong = new FAnimation(xfl, hongmap, 319.15f, 241.20f, 112f, 107f, FAnimation.LOOP);
 	//	hong.keyFrames[3].Debug();
 		
-		HashMap<String, Texture> icemap = new HashMap<String, Texture>();
+	/*	HashMap<String, Texture> icemap = new HashMap<String, Texture>();
 		icemap.put("bingkuai", new Texture(Gdx.files.internal("bingkuai.png")));
 		icemap.put("lie", new Texture(Gdx.files.internal("lie.png")));
 		icemap.put("lie2", new Texture(Gdx.files.internal("lie2.png")));
@@ -191,7 +191,7 @@ public class Test implements ApplicationListener, InputProcessor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		cross = new FAnimation(xfl, crossmap, 100f, 100f, FAnimation.LOOP);
+		cross = new FAnimation(xfl, crossmap, 100f, 100f, FAnimation.LOOP);*/
 	}
 
 	@Override
@@ -205,24 +205,28 @@ public class Test implements ApplicationListener, InputProcessor {
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		batch.begin();
+		
 		time += Gdx.graphics.getDeltaTime();
 		KFrame kframe1 = animtaion.getKeyFrame(time);
 		KFrame kframe2 = box.getKeyFrame(time);
-		KFrame kframe3 = hong.getKeyFrame(time);
-		KFrame kframe4 = ice.getKeyFrame(time);
-		KFrame kframe5 = cross.getKeyFrame(time);
-		batch.begin();
-		batch.draw(actor, 100, 100, 100, 100);
-		kframe1.draw(batch, 100, 100, 85, 85);
+	//	KFrame kframe2 = box.keyFrames[15];
+	//	kframe2.Debug();
+	//	KFrame kframe3 = hong.getKeyFrame(time);
+	//	KFrame kframe4 = ice.getKeyFrame(time);
+	//	KFrame kframe5 = cross.getKeyFrame(time);
+
+		batch.draw(actor, 200, 200, 100, 100);
+		kframe1.draw(batch, 200, 200, 85, 85);
 //		batch.draw(actor, spriteVertices, 0, 20);
 
-	//	kframe2.draw(batch, 200, 200, 85, 85);
-		kframe3.draw(batch, 0, 0, 85, 85);
+		kframe2.draw(batch, 100, 100, 85, 85);
+	//	kframe3.draw(batch, 0, 0, 85, 85);
 	//	kframe4.draw(batch, 300, 300, 100, 100);
-		kframe5.draw(batch, 200, 200, 110, 110);
+//		kframe5.draw(batch, 200, 200, 110, 110);
 		batch.end();
 	}
 
