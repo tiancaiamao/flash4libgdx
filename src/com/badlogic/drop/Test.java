@@ -220,7 +220,7 @@ public class Test implements ApplicationListener, InputProcessor {
 	//	KFrame kframe5 = cross.getKeyFrame(time);
 
 		batch.draw(actor, 200, 200, 100, 100);
-		kframe1.draw(batch, 200, 200, 85, 85);
+		kframe1.draw(batch, 200, 200, 100, 100);
 //		batch.draw(actor, spriteVertices, 0, 20);
 
 		kframe2.draw(batch, 100, 100, 85, 85);

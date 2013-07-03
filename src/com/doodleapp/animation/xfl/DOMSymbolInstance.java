@@ -2,7 +2,7 @@ package com.doodleapp.animation.xfl;
 
 import com.badlogic.gdx.utils.XmlReader.Element;
 
-public class DOMSymbolInstance implements XflDrawable {
+public class DOMSymbolInstance {
 	public String libraryItemName;
 	public String symbolType;
 //	public int firstFrame;

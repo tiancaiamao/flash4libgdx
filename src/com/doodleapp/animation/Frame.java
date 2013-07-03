@@ -6,17 +6,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.doodleapp.animation.xfl.DOMFrame;
-import com.doodleapp.animation.xfl.Matrix;
 
 // It's a Frame in one layer
-public class Frame implements DrawableRecurse {
-	DrawableRecurse[] elements;
+public class Frame {
+	FrameElement[] elements;
 	FAnimation animation;
 
 	public Frame(DOMFrame domframe, Map<String, TextureRegion> map, FAnimation animation) {
 		int length = domframe.elements.length;
 		if (length > 0) {
-			elements = new DrawableRecurse[length];
+			elements = new FrameElement[length];
 			for (int i = 0; i < length; i++) {
 				elements[i] = new FrameElement(domframe.elements[i], map, animation);
 			}
@@ -39,12 +38,5 @@ public class Frame implements DrawableRecurse {
 				elem.Debug();
 			}
 		}
-	}
-
-	@Override
-	public void drawRecurse(SpriteBatch batch, int index, float x, float y,
-			float width, float height, Matrix matrix) {
-		// TODO Auto-generated method stub
-		
 	}
 }

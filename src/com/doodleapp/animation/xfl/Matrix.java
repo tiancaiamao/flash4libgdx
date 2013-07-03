@@ -35,6 +35,7 @@ public class Matrix {
 		str = xml.getAttribute("c", null);
 		if (str != null) {
 			c = Double.parseDouble(str);
+
 		}
 		str = xml.getAttribute("d", null);
 		if (str != null) {
