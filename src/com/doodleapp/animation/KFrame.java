@@ -32,7 +32,7 @@ public class KFrame implements Drawable {
 
 	public void addLayer(Frame frame) {
 		if (layers == null)
-			System.out.println("layers 怎么会为空呢？ 这不科学 呢");
+			System.out.println("addLayer error");
 		layers.add(frame);
 	}
 	public void setLayers(Array<Frame> frames) {

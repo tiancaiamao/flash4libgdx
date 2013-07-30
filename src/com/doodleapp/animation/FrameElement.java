@@ -69,6 +69,42 @@ public class FrameElement {
 //		this.centerPoint3DY = inst.centerPoint3DY;
 	}
 
+	public FrameElement(DOMSymbolInstance inst1,
+			DOMSymbolInstance inst2, float precent, float precent_after_interpolation,
+			Map<String, TextureRegion> map, FAnimation animation) {
+
+		this.animation = animation;
+		if (!inst1.libraryItemName.equals(inst2.libraryItemName)) {
+			System.out.println("FrameElement construce error: not equal to DOMSymbolInstance");
+		}
+		if (precent > 1 || precent < 0) {
+			System.out.println("FrameElement construct error: precent not right!"+precent);
+		}
+		this.name = inst1.libraryItemName;
+		this.texture = map.get(inst1.libraryItemName);
+		if (this.texture == null) {
+			System.out.println("没有找到对应的texture"+inst1.libraryItemName);
+		}
+		this.sprite = new Sprite(texture);
+		Matrix matrix = new Matrix();
+		matrix.a = inst1.matrix.a + (inst2.matrix.a - inst1.matrix.a) * precent_after_interpolation;
+		matrix.b = inst1.matrix.b + (inst2.matrix.b - inst1.matrix.b) * precent_after_interpolation;
+		matrix.c = inst1.matrix.c + (inst2.matrix.c - inst1.matrix.c) * precent_after_interpolation;
+		matrix.d = inst1.matrix.d + (inst2.matrix.d - inst1.matrix.d) * precent_after_interpolation;
+		matrix.tx = inst1.matrix.tx + (inst2.matrix.tx - inst1.matrix.tx) * precent_after_interpolation;
+		matrix.ty = inst1.matrix.ty + (inst2.matrix.ty - inst1.matrix.ty) * precent_after_interpolation;
+		this.matrix = matrix;
+		this.transformationPoint = inst1.transformationPoint;
+		this.color = new Color();
+		double c1 = 1;
+		double c2 = 1;
+		if (inst1.color != null)
+			c1 = inst1.color.alphaMultiplier;
+		if (inst2.color != null)
+			c2 = inst2.color.alphaMultiplier;
+		this.color.alphaMultiplier = c1 + (c2 - c1) * precent;
+	}
+
 	public void draw(SpriteBatch batch, float x, float y, float width,
 			float height) {
 		if (color != null) {
@@ -78,14 +114,14 @@ public class FrameElement {
 		}
 		final float[] vertices = sprite.getVertices();
 
-		float xScale = 1;
-		float yScale = 1;
-		if (animation.W != 0) {
-			xScale = width / animation.W;
-		}
-		if (animation.H != 0) {
-			yScale = height / animation.H;
-		}
+//		float xScale = 1;
+//		float yScale = 1;
+//		if (animation.W != 0) {
+//			xScale = width / animation.W;
+//		}
+//		if (animation.H != 0) {
+//			yScale = height / animation.H;
+//		}
 		
 
 //		float x1 = 0;
@@ -101,14 +137,14 @@ public class FrameElement {
 		// use transformationPoint as the origin, move the object
 		// do matrix transform
 		// move back the object
-		float x1 = - transformationPoint.x * xScale; //vertices[X1];
-		float y1 = - transformationPoint.y * yScale;//vertices[Y1];		
-		float x2 = - transformationPoint.x * xScale;//vertices[X2];
-		float y2 = (texture.getRegionHeight() - transformationPoint.y) * yScale;//vertices[Y2];
-		float x3 = (texture.getRegionWidth() - transformationPoint.x) * xScale;//vertices[X3];
-		float y3 = (texture.getRegionHeight() - transformationPoint.y) * yScale;//vertices[Y3];
-		float x4 = (texture.getRegionWidth() - transformationPoint.x) * xScale;//vertices[X4];
-		float y4 = - transformationPoint.y * yScale;//vertices[Y4];
+		float x1 = 0; //vertices[X1];
+		float y1 = 0;//vertices[Y1];		
+		float x2 = 0;//vertices[X2];
+		float y2 = texture.getRegionHeight();//vertices[Y2];
+		float x3 = texture.getRegionWidth();//vertices[X3];
+		float y3 = texture.getRegionHeight();//vertices[Y3];
+		float x4 = texture.getRegionWidth();//vertices[X4];
+		float y4 = 0;//vertices[Y4];
 
 //		float x1 = 0;
 //		float y1 = 0;
@@ -127,8 +163,8 @@ public class FrameElement {
 		float b = (float) matrix.b;
 		float c = (float) matrix.c;
 		float d = (float) matrix.d;
-		float tx =  (matrix.tx - animation.X );//- animation.W/2);
-		float ty =  (matrix.ty - animation.Y);// - animation.H/2);
+		float tx = (float)matrix.tx;//- animation.W/2);
+		float ty = (float)matrix.ty;// - animation.H/2);
 		
 		// x' = a*x + c*y + tx
 		// y' = b*x + d*y + ty
@@ -146,23 +182,24 @@ public class FrameElement {
 		float fx4 = (float) (x4 * matrix.a + y4 * matrix.c) + matrix.tx + x;
 		float fy4 = (float) (x4 * matrix.b + y4 * matrix.d) + matrix.ty + y;*/
 		
-//		float fx1 = (float) (x1 *  a  + y1 * c) + tx;
-//		float fy1 = (float) (x1 *  b  + y1 * d) + ty;
-//		float fx2 = (float) (x2 *  a  + y2 * c) + tx;
-//		float fy2 = (float) (x2 *  b  + y2 * d) + ty;
-//		float fx3 = (float) (x3 *  a  + y3 * c) + tx;
-//		float fy3 = (float) (x3 *  b  + y3 * d) + ty;
-//		float fx4 = (float) (x4 *  a  + y4 * c) + tx;
-//		float fy4 = (float) (x4 *  b  + y4 * d) + ty;
+		// matrix transformation
+		float fx1 = (float) (x1 *  a  + y1 * c) + tx;
+		float fy1 = (float) (x1 *  b  + y1 * d) + ty;
+		float fx2 = (float) (x2 *  a  + y2 * c) + tx;
+		float fy2 = (float) (x2 *  b  + y2 * d) + ty;
+		float fx3 = (float) (x3 *  a  + y3 * c) + tx;
+		float fy3 = (float) (x3 *  b  + y3 * d) + ty;
+		float fx4 = (float) (x4 *  a  + y4 * c) + tx;
+		float fy4 = (float) (x4 *  b  + y4 * d) + ty;
 		
-		float fx1 = (float) (x1 *  a  + y1 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
-		float fy1 = (float) (x1 *  b  + y1 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
-		float fx2 = (float) (x2 *  a  + y2 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
-		float fy2 = (float) (x2 *  b  + y2 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
-		float fx3 = (float) (x3 *  a  + y3 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
-		float fy3 = (float) (x3 *  b  + y3 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
-		float fx4 = (float) (x4 *  a  + y4 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
-		float fy4 = (float) (x4 *  b  + y4 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
+//		float fx1 = (float) (x1 *  a  + y1 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
+//		float fy1 = (float) (x1 *  b  + y1 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
+//		float fx2 = (float) (x2 *  a  + y2 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
+//		float fy2 = (float) (x2 *  b  + y2 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
+//		float fx3 = (float) (x3 *  a  + y3 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
+//		float fy3 = (float) (x3 *  b  + y3 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
+//		float fx4 = (float) (x4 *  a  + y4 * c) + tx + transformationPoint.x;// + xScale*animation.W/2;
+//		float fy4 = (float) (x4 *  b  + y4 * d) + ty + transformationPoint.y;// + yScale*animation.H/2;
 		
 /*		float fx1 = (float) (x1 *  matrix.a  + y1 * matrix.c) + matrix.tx + transformationPoint.x;
 		float fy1 = (float) (x1 *  matrix.b  + y1 * matrix.d) + matrix.ty + transformationPoint.y;
@@ -173,29 +210,50 @@ public class FrameElement {
 		float fx4 = (float) (x4 *  matrix.a  + y4 * matrix.c) + matrix.tx + transformationPoint.x;
 		float fy4 = (float) (x4 *  matrix.b  + y4 * matrix.d) + matrix.ty + transformationPoint.y;*/
 		
+		// move to Viewport center
+		fx1 = fx1 - animation.X;
+		fy1 = fy1 - animation.Y;
+		fx2 = fx2 - animation.X;
+		fy2 = fy2 - animation.Y;
+		fx3 = fx3 - animation.X;
+		fy3 = fy3 - animation.Y;
+		fx4 = fx4 - animation.X;
+		fy4 = fy4 - animation.Y;
 
 		// inverse the y-coordinate
-		vertices[X1] = fx1 + x + width/2;
-		vertices[Y1] = -fy1 + y + height/2;;
+		vertices[X1] = fx1;
+		vertices[Y1] = -fy1;
 		vertices[U1] = texture.getU();
 		vertices[V1] = texture.getV();
 		
-		vertices[X2] = fx2 + x + width/2;
-		vertices[Y2] = -fy2 + y + height/2;;
+		vertices[X2] = fx2;
+		vertices[Y2] = -fy2;
 		vertices[U2] = texture.getU();
 		vertices[V2] = texture.getV2();
 		
-		vertices[X3] = fx3 + x + width/2;
-		vertices[Y3] = -fy3 + y + height/2;;
+		vertices[X3] = fx3;
+		vertices[Y3] = -fy3;;
 		vertices[U3] = texture.getU2();
 		vertices[V3] = texture.getV2();
 		
-		vertices[X4] = fx4 + x + width/2;
-		vertices[Y4] = -fy4 + y + height/2;;
+		vertices[X4] = fx4;
+		vertices[Y4] = -fy4;
 		vertices[U4] = texture.getU2();
 		vertices[V4] = texture.getV();
 		
-
+		// move to Window center
+		vertices[X1] += (x + width/2);
+		vertices[Y1] += (y + height/2);
+		
+		vertices[X2] += (x + width/2);
+		vertices[Y2] += (y + height/2);
+		
+		vertices[X3] += (x + width/2);
+		vertices[Y3] += (y + height/2);
+		
+		vertices[X4] += (x + width/2);
+		vertices[Y4] += (y + height/2);
+		
 		batch.draw(texture.getTexture(), vertices, 0, 20);
 
 //		if (this.name.equals("tiekuai")) {

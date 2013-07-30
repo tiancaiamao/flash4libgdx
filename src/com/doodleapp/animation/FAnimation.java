@@ -19,8 +19,6 @@ public class FAnimation {
 	public float H;
 	public KFrame[] keyFrames;
 	
-
-	
 	public static final int NORMAL = 0;
 	public static final int REVERSED = 1;
 	public static final int LOOP = 2;
@@ -31,8 +29,8 @@ public class FAnimation {
 	public static final int CENTER = 0;
 	public static final int LEFT_TOP = 1;
 
-	private float frameDuration;
-	private float animationDuration;
+	public float frameDuration;
+	public float animationDuration;
 
 	private int playMode = NORMAL;
 	
@@ -48,9 +46,9 @@ public class FAnimation {
 	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, float x, float y, int playMode) {
 		init(xfl, map, x, y, 0.0f, 0.0f, 1f/24f, playMode);
 	}
-	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, float x, float y, float w, float h, int playMode) {
-		init(xfl, map, x, y, w, h, 1f/24f, playMode);
-	}
+//	public FAnimation(Xfl xfl, Map<String, TextureRegion> map, float x, float y, float w, float h, int playMode) {
+//		init(xfl, map, x, y, w, h, 1f/24f, playMode);
+//	}
 	
 	// the constructor
 	private void init(Xfl xfl, Map<String, TextureRegion> map, float x,
@@ -81,20 +79,65 @@ public class FAnimation {
 			keyFrames[i] = tmp;
 		}
 
-		for (DOMLayer layer : timeline.layers) {
-			for (DOMFrame domframe : layer.frames) {
+		// you're not expected to understand this...blah blah blah
+		for (int i=0; i<timeline.layers.length; i++) {
+			DOMLayer layer = timeline.layers[i];
+			DOMFrame prev = null;
+			for(int j=0; j<layer.frames.length; j++) {
+				DOMFrame domframe = layer.frames[j];
+				
 				Frame frame = new Frame(domframe, map, this);
-				for (int i = 0; i<domframe.duration; i++) {
-					keyFrames[domframe.index + i].addLayer(frame);
+				if (prev != null) {
+					for (int k=prev.index; k<domframe.index; k++) {
+						float precent = (float)(k - prev.index) / (domframe.index - prev.index);
+						keyFrames[k].addLayer(makeTween(prev, domframe, map,  precent));
+					}
+				}
+				
+				keyFrames[domframe.index].addLayer(frame);
+				if (domframe.duration != 1) {
+					if (domframe.tweenType != null) {
+						if (domframe.tweenType.equals("motion")) {
+							prev = domframe;
+						} else {
+							System.out.println("worng type of tweenType: "+domframe.tweenType);
+						}
+					} else {
+						for (int i1=1; i1<domframe.duration; i1++) {
+							keyFrames[domframe.index + i1].addLayer(frame);
+						}
+						prev = null;
+					}
 				}
 			}
 		}
+		
+//		for (DOMLayer layer : timeline.layers) {
+//			int prev = -1;
+//			for (DOMFrame domframe : layer.frames) {
+//				// make the current frame and fix prev frame, if it has tween motion
+//				Frame frame = new Frame(domframe, map, this);
+//				if (prev != -1) {
+//					for(int i=prev; i<domframe.index; i++) {
+//						float precent = (float)(i - prev) / (domframe.index - prev);
+//					}
+//				}
+//				
+//				for (int i = 0; i<domframe.duration; i++) {
+//					keyFrames[domframe.index + i].addLayer(frame);
+//				}
+//			}
+//		}
 		
 		for (KFrame kframe:keyFrames) {
 			kframe.getLayers().reverse();
 		}
 	}
 	
+	private Frame makeTween(DOMFrame prev, DOMFrame end, Map<String, TextureRegion> map, float precent) {
+		return new Frame(prev, end, precent, map, this);
+	}
+
 	public KFrame getKeyFrame (float stateTime, boolean looping) {
 		// we set the play mode by overriding the previous mode based on looping
 		// parameter value

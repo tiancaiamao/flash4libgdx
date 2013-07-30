@@ -42,4 +42,13 @@ public class Matrix {
 			d = Double.parseDouble(str);
 		}
 	}
+
+	public Matrix() {
+		a = 1;
+		d = 1;
+		b = 0;
+		c = 0;
+		tx = 0;
+		ty = 0;
+	}
 }

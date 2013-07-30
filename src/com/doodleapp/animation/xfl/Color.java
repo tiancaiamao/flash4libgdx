@@ -14,5 +14,9 @@ public class Color {
 			alphaMultiplier = Double.parseDouble(str);
 	}
 
+	public Color() {
+		alphaMultiplier = 1d;
+	}
+
 	public double alphaMultiplier;
 }
