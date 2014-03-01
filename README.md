@@ -20,7 +20,7 @@ In the FAnimation's construction function, you need to specify a Viewport area, 
 Get a KFrame，when you call KFrame.draw, you get a window specify by (x, y, w, h). All objects in the viewport area is scaled to be drawed in the window. In the case that you only specify the Viewport's center rather than a Viewport area, no scale would happen. things will be drawed based on Viewport center and Window center.
 
 # How it's implemented?
-I have a blog post for it [in chinese](http://www.zenlife.tk/flash-libgdx), but you'd better to read the f*cking source code.
+I have a blog post for it [in chinese](http://www.zenlife.tk/flash-libgdx.article), but you'd better to read the f*cking source code.
 
 # Limitate
 1. filter transformation is not supported
